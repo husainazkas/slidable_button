@@ -131,16 +131,19 @@ class _SlidableButtonState extends State<SlidableButton>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: widget.width,
       height: widget.height,
+      decoration: BoxDecoration(
+        border: widget.border,
+        borderRadius: widget.borderRadius,
+      ),
       child: Stack(
         key: _containerKey,
         children: <Widget>[
           DecoratedBox(
             decoration: BoxDecoration(
               color: widget.color,
-              border: widget.border,
               borderRadius: widget.borderRadius,
             ),
             child: widget.dismissible

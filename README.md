@@ -1,6 +1,10 @@
 # slidable_button
+[![Pub](https://img.shields.io/pub/v/slidable_button.svg?style=flat-square)](https://pub.dartlang.org/packages/slidable_button)
+[![support](https://img.shields.io/badge/platform-flutter%7Cflutter%20web-2196f3.svg?style=flat-square)](https://github.com/husainazkas/slidable_button)
 
-A simple flutter plugin project for Slidable Button.
+A simple flutter plugin for Slidable Button.
+
+![](https://github.com/husainazkas/slidable_button/blob/master/screenshot/1.gif) ![](https://github.com/husainazkas/slidable_button/blob/master/screenshot/2.gif)
 
 Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/packages/swipe_button).
 
@@ -10,9 +14,7 @@ Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/pack
 
 ```yaml
 dependencies:
-  slidable_button:
-    git:
-      url: git://github.com/husainazkas/slidable_button.git
+  slidable_button: ^1.0.0
 ```
 
 ### Simple to use

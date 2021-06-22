@@ -4,7 +4,7 @@
 
 A simple flutter plugin for Slidable Button.
 
-![](https://github.com/husainazkas/slidable_button/blob/master/screenshot/1.gif) ![](https://github.com/husainazkas/slidable_button/blob/master/screenshot/2.gif)
+<img src="https://github.com/husainazkas/slidable_button/blob/master/screenshot/1.gif" width="300px" /> <img src="https://github.com/husainazkas/slidable_button/blob/master/screenshot/2.gif" width="300px" />
 
 Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/packages/swipe_button).
 

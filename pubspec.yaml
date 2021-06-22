@@ -1,6 +1,6 @@
 name: slidable_button
 description: A simple flutter plugin for Slidable Button.
-version: 1.0.1
+version: 1.0.1+1
 homepage: https://github.com/husainazkas/slidable_button
 
 environment:

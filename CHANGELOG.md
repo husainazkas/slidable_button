@@ -1,3 +1,7 @@
+## 1.0.1+2
+* Fix `label` not showing when onChanged is null.
+* Add example supports for Android, iOS, Web, macOS, and Windows.
+
 ## 1.0.1+1
 * Update README
 

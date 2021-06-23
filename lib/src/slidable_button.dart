@@ -183,7 +183,7 @@ class _SlidableButtonState extends State<SlidableButton>
                     : widget.buttonColor,
               ),
               child: widget.onChanged == null
-                  ? null
+                  ? Center(child: widget.label)
                   : GestureDetector(
                       onHorizontalDragStart: _onDragStart,
                       onHorizontalDragUpdate: _onDragUpdate,

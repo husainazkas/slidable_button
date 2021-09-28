@@ -30,7 +30,7 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
             SlidableButton(
               width: MediaQuery.of(context).size.width / 3,
               buttonWidth: 60.0,
-              color: Theme.of(context).accentColor.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
               buttonColor: Theme.of(context).primaryColor,
               dismissible: false,
               label: Center(child: Text('Slide Me')),

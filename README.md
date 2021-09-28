@@ -14,7 +14,7 @@ Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/pack
 
 ```yaml
 dependencies:
-  slidable_button: ^1.0.1+2
+  slidable_button: ^1.0.2
 ```
 
 ### Simple to use

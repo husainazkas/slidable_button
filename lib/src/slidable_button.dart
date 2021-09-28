@@ -185,6 +185,7 @@ class _SlidableButtonState extends State<SlidableButton>
               child: widget.onChanged == null
                   ? Center(child: widget.label)
                   : GestureDetector(
+                      behavior: HitTestBehavior.translucent,
                       onHorizontalDragStart: _onDragStart,
                       onHorizontalDragUpdate: _onDragUpdate,
                       onHorizontalDragEnd: _onDragEnd,

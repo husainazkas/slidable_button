@@ -1,3 +1,7 @@
+## 1.0.2
+* Added `HitTestBehavior.translucent`.
+* Prevention maintenance from deprecated API.
+
 ## 1.0.1+2
 * Fix `label` not showing when onChanged is null.
 * Add example supports for Android, iOS, Web, macOS, and Windows.

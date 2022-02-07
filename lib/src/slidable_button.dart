@@ -127,7 +127,7 @@ class _SlidableButtonState extends State<SlidableButton>
     _initialPositionController();
   }
 
-  _initialPositionController() {
+  void _initialPositionController() {
     if (widget.initialPosition == SlidableButtonPosition.right) {
       _controller.value = 1.0;
     } else {

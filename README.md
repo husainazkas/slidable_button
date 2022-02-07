@@ -4,7 +4,9 @@
 
 A simple flutter plugin for Slidable Button.
 
-<img src="https://raw.githubusercontent.com/husainazkas/slidable_button/master/screenshot/1.gif" width="300px"/> &nbsp; <img src="https://raw.githubusercontent.com/husainazkas/slidable_button/master/screenshot/2.gif" width="300px"/>
+<div style="text-align:center"><img src="https://raw.githubusercontent.com/husainazkas/slidable_button/master/screenshot/1.gif" width="300px"/> &nbsp; <img src="https://raw.githubusercontent.com/husainazkas/slidable_button/master/screenshot/2.gif" width="300px"/></div>
+
+<div style="text-align:center"><img src="https://raw.githubusercontent.com/husainazkas/slidable_button/master/screenshot/3.gif" width="300px" /></div>
 
 Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/packages/swipe_button).
 
@@ -14,7 +16,7 @@ Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/pack
 
 ```yaml
 dependencies:
-  slidable_button: ^1.0.2
+  slidable_button: ^1.1.0
 ```
 
 ### Simple to use

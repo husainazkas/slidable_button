@@ -1,3 +1,6 @@
+## 1.1.0
+* Added new option to restart button position.
+
 ## 1.0.2
 * Added `HitTestBehavior.translucent`.
 * Prevention maintenance from deprecated API.

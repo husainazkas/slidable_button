@@ -65,24 +65,30 @@ class SlidableButton extends StatefulWidget {
   /// Controller for the button while sliding.
   final AnimationController? controller;
 
+  /// Restart animation when the position is opposite to initialPosition
+  ///
+  /// Defaul value false
+  final bool isRestart;
+
   /// Creates a [SlidableButton]
-  const SlidableButton({
-    Key? key,
-    required this.onChanged,
-    this.controller,
-    this.child,
-    this.disabledColor,
-    this.buttonColor,
-    this.color,
-    this.label,
-    this.border,
-    this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
-    this.initialPosition = SlidableButtonPosition.left,
-    this.height = 36.0,
-    this.width = 120.0,
-    this.buttonWidth,
-    this.dismissible = true,
-  }) : super(key: key);
+  const SlidableButton(
+      {Key? key,
+      required this.onChanged,
+      this.controller,
+      this.child,
+      this.disabledColor,
+      this.buttonColor,
+      this.color,
+      this.label,
+      this.border,
+      this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
+      this.initialPosition = SlidableButtonPosition.left,
+      this.height = 36.0,
+      this.width = 120.0,
+      this.buttonWidth,
+      this.dismissible = true,
+      this.isRestart = false})
+      : super(key: key);
 
   @override
   _SlidableButtonState createState() => _SlidableButtonState();
@@ -118,8 +124,14 @@ class _SlidableButtonState extends State<SlidableButton>
         widget.controller ?? AnimationController.unbounded(vsync: this);
     _contentAnimation = Tween<double>(begin: 1.0, end: 0.0)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _initialPositionController();
+  }
+
+  void _initialPositionController() {
     if (widget.initialPosition == SlidableButtonPosition.right) {
       _controller.value = 1.0;
+    } else {
+      _controller.value = 0.0;
     }
   }
 
@@ -236,6 +248,9 @@ class _SlidableButtonState extends State<SlidableButton>
     _controller.animateWith(simulation).whenComplete(() {
       if (widget.onChanged != null) {
         widget.onChanged!(result);
+      }
+      if (widget.isRestart && widget.initialPosition != result) {
+        _initialPositionController();
       }
     });
   }

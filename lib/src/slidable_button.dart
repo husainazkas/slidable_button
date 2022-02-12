@@ -57,6 +57,11 @@ class SlidableButton extends StatefulWidget {
   /// Initial button position. It can on the left or right.
   final SlidableButtonPosition initialPosition;
 
+  /// The % at which the slide gesture should be considered as completed (0 to 1)
+  ///
+  /// Default value is 0.5.
+  final double completeSlideAt;
+
   /// Listen to position, is button on the left or right.
   ///
   /// You must set this argument although is null.
@@ -83,6 +88,7 @@ class SlidableButton extends StatefulWidget {
       this.border,
       this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
       this.initialPosition = SlidableButtonPosition.left,
+      this.completeSlideAt = 0.5,
       this.height = 36.0,
       this.width = 120.0,
       this.buttonWidth,
@@ -230,7 +236,7 @@ class _SlidableButtonState extends State<SlidableButton>
     }
     SlidableButtonPosition result;
     double acceleration, velocity;
-    if (_controller.value >= 0.5) {
+    if (_controller.value >= widget.completeSlideAt) {
       acceleration = 0.5;
       velocity = fractionalVelocity;
       result = SlidableButtonPosition.right;

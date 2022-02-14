@@ -1,5 +1,8 @@
+## 1.2.0
+* Added new option when the animation slide start after released [PR #4](https://github.com/husainazkas/slidable_button/pull/4).
+
 ## 1.1.0
-* Added new option to restart button position.
+* Added new option to restart button position [PR #2](https://github.com/husainazkas/slidable_button/pull/2).
 
 ## 1.0.2
 * Added `HitTestBehavior.translucent`.

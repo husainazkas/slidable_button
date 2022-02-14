@@ -230,33 +230,38 @@ class _SlidableButtonState extends State<SlidableButton>
 
   void _onDragEnd(DragEndDetails details) {
     final extent = _container!.size.width - _positioned!.size.width;
-    var fractionalVelocity = (details.primaryVelocity! / extent).abs();
+    double fractionalVelocity = (details.primaryVelocity! / extent).abs();
     if (fractionalVelocity < 0.5) {
       fractionalVelocity = 0.5;
     }
-    SlidableButtonPosition result;
+
     double acceleration, velocity;
     if (_controller.value >= widget.completeSlideAt) {
       acceleration = 0.5;
       velocity = fractionalVelocity;
-      result = SlidableButtonPosition.right;
     } else {
       acceleration = -0.5;
       velocity = -fractionalVelocity;
-      result = SlidableButtonPosition.left;
     }
+
     final simulation = SlidableSimulation(
       acceleration,
       _controller.value,
       1.0,
       velocity,
     );
+
     _controller.animateWith(simulation).whenComplete(() {
-      if (widget.onChanged != null) {
-        widget.onChanged!(result);
-      }
+      SlidableButtonPosition result = _controller.value == 0
+          ? SlidableButtonPosition.left
+          : SlidableButtonPosition.right;
+
       if (widget.isRestart && widget.initialPosition != result) {
         _initialPositionController();
+      }
+
+      if (widget.onChanged != null) {
+        widget.onChanged!(result);
       }
     });
   }

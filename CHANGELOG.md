@@ -1,3 +1,6 @@
+## 1.3.0
+* New state `SlidableButtonPosition.sliding` when `tristate` is set to true
+
 ## 1.2.0
 * Added new option when the animation slide start after released [PR #4](https://github.com/husainazkas/slidable_button/pull/4).
 

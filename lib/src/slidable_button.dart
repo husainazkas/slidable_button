@@ -72,29 +72,38 @@ class SlidableButton extends StatefulWidget {
 
   /// Restart animation when the position is opposite to initialPosition
   ///
-  /// Defaul value false
+  /// Default value false
   final bool isRestart;
 
+  /// If true the button's position can be left, right, or sliding. Otherwise only left or right.
+  ///
+  /// ATTENTION:
+  /// This option will always trigger `onChanged` if the button has not been released. Don't forget to handle it to prevent multiple triggers.
+  ///
+  /// Default value false
+  final bool tristate;
+
   /// Creates a [SlidableButton]
-  const SlidableButton(
-      {Key? key,
-      required this.onChanged,
-      this.controller,
-      this.child,
-      this.disabledColor,
-      this.buttonColor,
-      this.color,
-      this.label,
-      this.border,
-      this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
-      this.initialPosition = SlidableButtonPosition.left,
-      this.completeSlideAt = 0.5,
-      this.height = 36.0,
-      this.width = 120.0,
-      this.buttonWidth,
-      this.dismissible = true,
-      this.isRestart = false})
-      : super(key: key);
+  const SlidableButton({
+    Key? key,
+    required this.onChanged,
+    this.controller,
+    this.child,
+    this.disabledColor,
+    this.buttonColor,
+    this.color,
+    this.label,
+    this.border,
+    this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
+    this.initialPosition = SlidableButtonPosition.left,
+    this.completeSlideAt = 0.5,
+    this.height = 36.0,
+    this.width = 120.0,
+    this.buttonWidth,
+    this.dismissible = true,
+    this.isRestart = false,
+    this.tristate = false,
+  }) : super(key: key);
 
   @override
   _SlidableButtonState createState() => _SlidableButtonState();
@@ -226,6 +235,10 @@ class _SlidableButtonState extends State<SlidableButton>
     final pos = _container!.globalToLocal(details.globalPosition) - _start;
     final extent = _container!.size.width - _positioned!.size.width;
     _controller.value = (pos.dx.clamp(0.0, extent) / extent);
+
+    if (widget.tristate) {
+      _onChanged(SlidableButtonPosition.sliding);
+    }
   }
 
   void _onDragEnd(DragEndDetails details) {
@@ -252,17 +265,21 @@ class _SlidableButtonState extends State<SlidableButton>
     );
 
     _controller.animateWith(simulation).whenComplete(() {
-      SlidableButtonPosition result = _controller.value == 0
+      SlidableButtonPosition position = _controller.value == 0
           ? SlidableButtonPosition.left
           : SlidableButtonPosition.right;
 
-      if (widget.isRestart && widget.initialPosition != result) {
+      if (widget.isRestart && widget.initialPosition != position) {
         _initialPositionController();
       }
 
-      if (widget.onChanged != null) {
-        widget.onChanged!(result);
-      }
+      _onChanged(position);
     });
+  }
+
+  void _onChanged(SlidableButtonPosition position) {
+    if (widget.onChanged != null) {
+      widget.onChanged!(position);
+    }
   }
 }

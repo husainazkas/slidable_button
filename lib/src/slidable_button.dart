@@ -77,9 +77,6 @@ class SlidableButton extends StatefulWidget {
 
   /// If true the button's position can be left, right, or sliding. Otherwise only left or right.
   ///
-  /// ATTENTION:
-  /// This option will always trigger `onChanged` if the button has not been released. Don't forget to handle it to prevent multiple triggers.
-  ///
   /// Default value false
   final bool tristate;
 
@@ -117,6 +114,7 @@ class _SlidableButtonState extends State<SlidableButton>
   late final AnimationController _controller;
   late Animation<double> _contentAnimation;
   Offset _start = Offset.zero;
+  bool _isSliding = false;
 
   RenderBox? get _positioned =>
       _positionedKey.currentContext!.findRenderObject() as RenderBox?;
@@ -236,7 +234,8 @@ class _SlidableButtonState extends State<SlidableButton>
     final extent = _container!.size.width - _positioned!.size.width;
     _controller.value = (pos.dx.clamp(0.0, extent) / extent);
 
-    if (widget.tristate) {
+    if (widget.tristate && !_isSliding) {
+      _isSliding = true;
       _onChanged(SlidableButtonPosition.sliding);
     }
   }
@@ -272,6 +271,8 @@ class _SlidableButtonState extends State<SlidableButton>
       if (widget.isRestart && widget.initialPosition != position) {
         _initialPositionController();
       }
+
+      _isSliding = false;
 
       _onChanged(position);
     });

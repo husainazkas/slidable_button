@@ -1,5 +1,8 @@
+## 1.3.1
+* Prevention multiple trigger `onChanged` when `tristate` is true.
+
 ## 1.3.0
-* New state `SlidableButtonPosition.sliding` when `tristate` is set to true
+* New state `SlidableButtonPosition.sliding` when `tristate` is set to true.
 
 ## 1.2.0
 * Added new option when the animation slide start after released [PR #4](https://github.com/husainazkas/slidable_button/pull/4).
@@ -16,13 +19,13 @@
 * Add example supports for Android, iOS, Web, macOS, and Windows.
 
 ## 1.0.1+1
-* Update README
+* Update README.
 
 ## 1.0.1
-* Fix border behind the button
+* Fix border behind the button.
 
 ## 1.0.0+1
-* Update README
+* Update README.
 
 ## 1.0.0
 * Initial release.

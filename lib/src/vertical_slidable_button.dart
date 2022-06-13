@@ -36,12 +36,12 @@ class VerticalSlidableButton extends StatefulWidget {
 
   /// The height of this widget (button and it's background).
   ///
-  /// Default value is 36.0.
+  /// Default value is 120.0.
   final double height;
 
   /// Width of area slide (usually called background).
   ///
-  /// Default value is 120.0.
+  /// Default value is 36.0.
   final double width;
 
   /// Width of button. If [buttonHeight] is still null and the [label] is not null, this will automatically wrapping [label].

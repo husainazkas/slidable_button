@@ -1,3 +1,6 @@
+## 2.0.0+1
+* Update docs on VerticalSlidableButton.
+
 ## 2.0.0
 * `SlidableButton` is now deprecate. Please use `Horizontal` or `VerticalSlidableButton` for specific direction usage.
 * Added `autoSlide` as new optional param that can control the button to auto slide after release or not.

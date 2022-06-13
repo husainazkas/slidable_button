@@ -1,6 +1,6 @@
 name: slidable_button
 description: A simple customizable flutter slide button widget.
-version: 2.0.0
+version: 2.0.0+1
 homepage: https://github.com/husainazkas/slidable_button
 
 environment:

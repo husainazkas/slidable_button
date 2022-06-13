@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'enum/slidable_button_position.dart';
+import '../slidable_button.dart';
 import 'slidable_button_clipper.dart';
 import 'slidable_button_simulation.dart';
 
-class SlidableButton extends StatefulWidget {
+class HorizontalSlidableButton extends StatefulWidget {
   /// Label of the button.
   final Widget? label;
 
@@ -81,9 +81,7 @@ class SlidableButton extends StatefulWidget {
   final bool tristate;
 
   /// Creates a [SlidableButton]
-  @Deprecated(
-      'Use [VerticalSlidableButton] or [HorizontalSlidableButton] instead of this widget.')
-  const SlidableButton({
+  const HorizontalSlidableButton({
     Key? key,
     required this.onChanged,
     this.controller,
@@ -94,7 +92,7 @@ class SlidableButton extends StatefulWidget {
     this.label,
     this.border,
     this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
-    this.initialPosition = SlidableButtonPosition.left,
+    this.initialPosition = SlidableButtonPosition.start,
     this.completeSlideAt = 0.5,
     this.height = 36.0,
     this.width = 120.0,
@@ -105,10 +103,11 @@ class SlidableButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SlidableButtonState createState() => _SlidableButtonState();
+  State<HorizontalSlidableButton> createState() =>
+      _HorizontalSlidableButtonState();
 }
 
-class _SlidableButtonState extends State<SlidableButton>
+class _HorizontalSlidableButtonState extends State<HorizontalSlidableButton>
     with SingleTickerProviderStateMixin {
   final GlobalKey _containerKey = GlobalKey();
   final GlobalKey _positionedKey = GlobalKey();
@@ -125,11 +124,10 @@ class _SlidableButtonState extends State<SlidableButton>
       _containerKey.currentContext!.findRenderObject() as RenderBox?;
 
   double get _buttonWidth {
-    if ((widget.buttonWidth ?? double.minPositive) > widget.width * 3 / 4) {
-      return widget.width * 3 / 4;
-    }
-    if (widget.buttonWidth != null) return widget.buttonWidth!;
-    return double.minPositive;
+    final width = widget.buttonWidth ?? double.minPositive;
+    final maxWidth = widget.width * 3 / 4;
+    if (width > maxWidth) return maxWidth;
+    return width;
   }
 
   @override
@@ -143,7 +141,7 @@ class _SlidableButtonState extends State<SlidableButton>
   }
 
   void _initialPositionController() {
-    if (widget.initialPosition == SlidableButtonPosition.right) {
+    if (widget.initialPosition == SlidableButtonPosition.end) {
       _controller.value = 1.0;
     } else {
       _controller.value = 0.0;
@@ -197,12 +195,8 @@ class _SlidableButtonState extends State<SlidableButton>
             ),
             child: Container(
               key: _positionedKey,
-              constraints: BoxConstraints(
-                minWidth: widget.height,
-                maxWidth: widget.width * 3 / 4,
-              ),
-              width: _buttonWidth,
               height: widget.height,
+              width: _buttonWidth,
               decoration: BoxDecoration(
                 borderRadius: widget.borderRadius,
                 color: widget.onChanged == null
@@ -265,19 +259,21 @@ class _SlidableButtonState extends State<SlidableButton>
       velocity,
     );
 
-    _controller.animateWith(simulation).whenComplete(() {
-      SlidableButtonPosition position = _controller.value == 0
-          ? SlidableButtonPosition.left
-          : SlidableButtonPosition.right;
+    _controller.animateWith(simulation).whenComplete(_afterDragEnd);
+  }
 
-      if (widget.isRestart && widget.initialPosition != position) {
-        _initialPositionController();
-      }
+  void _afterDragEnd() {
+    SlidableButtonPosition position = _controller.value <= .5
+        ? SlidableButtonPosition.start
+        : SlidableButtonPosition.end;
 
-      _isSliding = false;
+    if (widget.isRestart && widget.initialPosition != position) {
+      _initialPositionController();
+    }
 
-      _onChanged(position);
-    });
+    _isSliding = false;
+
+    _onChanged(position);
   }
 
   void _onChanged(SlidableButtonPosition position) {

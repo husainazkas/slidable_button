@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'enum/slidable_button_position.dart';
+import '../slidable_button.dart';
 import 'slidable_button_clipper.dart';
 import 'slidable_button_simulation.dart';
 
-class SlidableButton extends StatefulWidget {
+class VerticalSlidableButton extends StatefulWidget {
   /// Label of the button.
   final Widget? label;
 
@@ -44,10 +44,10 @@ class SlidableButton extends StatefulWidget {
   /// Default value is 120.0.
   final double width;
 
-  /// Width of button. If [buttonWidth] is still null and the [label] is not null, this will automatically wrapping [label].
+  /// Width of button. If [buttonHeight] is still null and the [label] is not null, this will automatically wrapping [label].
   ///
   /// The minimum size is [height], and the maximum size is three quarters from [width].
-  final double? buttonWidth;
+  final double? buttonHeight;
 
   /// It means the effect while and after sliding.
   ///
@@ -81,9 +81,7 @@ class SlidableButton extends StatefulWidget {
   final bool tristate;
 
   /// Creates a [SlidableButton]
-  @Deprecated(
-      'Use [VerticalSlidableButton] or [HorizontalSlidableButton] instead of this widget.')
-  const SlidableButton({
+  const VerticalSlidableButton({
     Key? key,
     required this.onChanged,
     this.controller,
@@ -94,21 +92,21 @@ class SlidableButton extends StatefulWidget {
     this.label,
     this.border,
     this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
-    this.initialPosition = SlidableButtonPosition.left,
+    this.initialPosition = SlidableButtonPosition.start,
     this.completeSlideAt = 0.5,
-    this.height = 36.0,
-    this.width = 120.0,
-    this.buttonWidth,
+    this.height = 120.0,
+    this.width = 36.0,
+    this.buttonHeight,
     this.dismissible = true,
     this.isRestart = false,
     this.tristate = false,
   }) : super(key: key);
 
   @override
-  _SlidableButtonState createState() => _SlidableButtonState();
+  State<VerticalSlidableButton> createState() => _VerticalSlidableButtonState();
 }
 
-class _SlidableButtonState extends State<SlidableButton>
+class _VerticalSlidableButtonState extends State<VerticalSlidableButton>
     with SingleTickerProviderStateMixin {
   final GlobalKey _containerKey = GlobalKey();
   final GlobalKey _positionedKey = GlobalKey();
@@ -124,12 +122,11 @@ class _SlidableButtonState extends State<SlidableButton>
   RenderBox? get _container =>
       _containerKey.currentContext!.findRenderObject() as RenderBox?;
 
-  double get _buttonWidth {
-    if ((widget.buttonWidth ?? double.minPositive) > widget.width * 3 / 4) {
-      return widget.width * 3 / 4;
-    }
-    if (widget.buttonWidth != null) return widget.buttonWidth!;
-    return double.minPositive;
+  double get _buttonHeight {
+    final height = widget.buttonHeight ?? double.minPositive;
+    final maxHeight = widget.height * 3 / 4;
+    if (height > maxHeight) return maxHeight;
+    return height;
   }
 
   @override
@@ -143,7 +140,7 @@ class _SlidableButtonState extends State<SlidableButton>
   }
 
   void _initialPositionController() {
-    if (widget.initialPosition == SlidableButtonPosition.right) {
+    if (widget.initialPosition == SlidableButtonPosition.end) {
       _controller.value = 1.0;
     } else {
       _controller.value = 0.0;
@@ -192,17 +189,13 @@ class _SlidableButtonState extends State<SlidableButton>
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) => Align(
-              alignment: Alignment((_controller.value * 2.0) - 1.0, 0.0),
+              alignment: Alignment(0.0, (_controller.value * 2.0) - 1.0),
               child: child,
             ),
             child: Container(
               key: _positionedKey,
-              constraints: BoxConstraints(
-                minWidth: widget.height,
-                maxWidth: widget.width * 3 / 4,
-              ),
-              width: _buttonWidth,
-              height: widget.height,
+              height: _buttonHeight,
+              width: widget.width,
               decoration: BoxDecoration(
                 borderRadius: widget.borderRadius,
                 color: widget.onChanged == null
@@ -227,14 +220,14 @@ class _SlidableButtonState extends State<SlidableButton>
 
   void _onDragStart(DragStartDetails details) {
     final pos = _positioned!.globalToLocal(details.globalPosition);
-    _start = Offset(pos.dx, 0.0);
+    _start = Offset(0.0, pos.dy);
     _controller.stop(canceled: true);
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
     final pos = _container!.globalToLocal(details.globalPosition) - _start;
-    final extent = _container!.size.width - _positioned!.size.width;
-    _controller.value = (pos.dx.clamp(0.0, extent) / extent);
+    final extent = _container!.size.height - _positioned!.size.height;
+    _controller.value = (pos.dy.clamp(0.0, extent) / extent);
 
     if (widget.tristate && !_isSliding) {
       _isSliding = true;
@@ -243,7 +236,7 @@ class _SlidableButtonState extends State<SlidableButton>
   }
 
   void _onDragEnd(DragEndDetails details) {
-    final extent = _container!.size.width - _positioned!.size.width;
+    final extent = _container!.size.height - _positioned!.size.height;
     double fractionalVelocity = (details.primaryVelocity! / extent).abs();
     if (fractionalVelocity < 0.5) {
       fractionalVelocity = 0.5;
@@ -265,19 +258,21 @@ class _SlidableButtonState extends State<SlidableButton>
       velocity,
     );
 
-    _controller.animateWith(simulation).whenComplete(() {
-      SlidableButtonPosition position = _controller.value == 0
-          ? SlidableButtonPosition.left
-          : SlidableButtonPosition.right;
+    _controller.animateWith(simulation).whenComplete(_afterDragEnd);
+  }
 
-      if (widget.isRestart && widget.initialPosition != position) {
-        _initialPositionController();
-      }
+  void _afterDragEnd() {
+    SlidableButtonPosition position = _controller.value <= .5
+        ? SlidableButtonPosition.start
+        : SlidableButtonPosition.end;
 
-      _isSliding = false;
+    if (widget.isRestart && widget.initialPosition != position) {
+      _initialPositionController();
+    }
 
-      _onChanged(position);
-    });
+    _isSliding = false;
+
+    _onChanged(position);
   }
 
   void _onChanged(SlidableButtonPosition position) {

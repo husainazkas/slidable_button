@@ -80,12 +80,18 @@ class VerticalSlidableButton extends StatefulWidget {
   /// Default value false
   final bool tristate;
 
+  /// Button will auto slide to nearest point after drag released if true, otherwise will not slide.
+  ///
+  /// Default value true
+  final bool autoSlide;
+
   /// Creates a [SlidableButton]
   const VerticalSlidableButton({
     Key? key,
     required this.onChanged,
     this.controller,
     this.child,
+    this.autoSlide = true,
     this.disabledColor,
     this.buttonColor,
     this.color,
@@ -236,6 +242,8 @@ class _VerticalSlidableButtonState extends State<VerticalSlidableButton>
   }
 
   void _onDragEnd(DragEndDetails details) {
+    if (!widget.autoSlide) return _afterDragEnd();
+
     final extent = _container!.size.height - _positioned!.size.height;
     double fractionalVelocity = (details.primaryVelocity! / extent).abs();
     if (fractionalVelocity < 0.5) {

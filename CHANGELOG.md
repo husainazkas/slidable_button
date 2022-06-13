@@ -1,3 +1,7 @@
+## 2.0.0
+* `SlidableButton` is now deprecate. Please use `Horizontal` or `VerticalSlidableButton` for specific direction usage.
+* Added `autoSlide` as new optional param that can control the button to auto slide after release or not.
+
 ## 1.3.1
 * Prevention multiple trigger `onChanged` when `tristate` is true.
 

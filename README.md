@@ -16,17 +16,21 @@ Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/pack
 
 ```yaml
 dependencies:
-  slidable_button: ^1.3.1
+  slidable_button: ^2.0.0
 ```
 
 ### Simple to use
+
+Import this library on your code.
 
 ```dart
 import 'package:slidable_button/slidable_button.dart';
 ```
 
+Now you can make your slidable button vertically or horizontally by using one of them widget. For horizontal usage example :
+
 ```dart
-    SlidableButton(
+    HorizontalSlidableButton(
       width: MediaQuery.of(context).size.width / 3,
       buttonWidth: 60.0,
       color: Theme.of(context).accentColor.withOpacity(0.5),
@@ -45,7 +49,7 @@ import 'package:slidable_button/slidable_button.dart';
       ),
       onChanged: (position) {
         setState(() {
-          if (position == SlidableButtonPosition.right) {
+          if (position == SlidableButtonPosition.end) {
             result = 'Button is on the right';
           } else {
             result = 'Button is on the left';
@@ -54,3 +58,39 @@ import 'package:slidable_button/slidable_button.dart';
       },
     ),
 ```
+
+Vertical usage example :
+
+```dart
+    VerticalSlidableButton(
+      height: MediaQuery.of(context).size.height / 3,
+      buttonHeight: 60.0,
+      color: Theme.of(context).accentColor.withOpacity(0.5),
+      buttonColor: Theme.of(context).primaryColor,
+      dismissible: false,
+      label: Center(child: Text('Slide Me')),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Top'),
+            Text('Bottom'),
+          ],
+        ),
+      ),
+      onChanged: (position) {
+        setState(() {
+          if (position == SlidableButtonPosition.end) {
+            result = 'Button is on the bottom';
+          } else {
+            result = 'Button is on the top';
+          }
+        });
+      },
+    ),
+```
+
+### Breaking Change
+
+Starts from v2.x.x, `SlidableButton` class is deprecated. Please use `HorizontalSlidableButton` or  `VerticalSlidableButton` for specific direction usage.

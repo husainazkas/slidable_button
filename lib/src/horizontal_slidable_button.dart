@@ -146,18 +146,27 @@ class _HorizontalSlidableButtonState extends State<HorizontalSlidableButton>
     _initialPositionController();
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant HorizontalSlidableButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.initialPosition != oldWidget.initialPosition) {
+      _initialPositionController();
+    }
+  }
+
   void _initialPositionController() {
     if (widget.initialPosition == SlidableButtonPosition.end) {
       _controller.value = 1.0;
     } else {
       _controller.value = 0.0;
     }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override

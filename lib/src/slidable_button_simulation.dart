@@ -2,11 +2,11 @@ import 'package:flutter/physics.dart';
 
 class SlidableSimulation extends GravitySimulation {
   SlidableSimulation(
-    double acceleration,
-    double distance,
-    double endDistance,
-    double velocity,
-  ) : super(acceleration, distance, endDistance, velocity);
+    super.acceleration,
+    super.distance,
+    super.endDistance,
+    super.velocity,
+  );
 
   @override
   double x(double time) => super.x(time).clamp(0.0, 1.0);

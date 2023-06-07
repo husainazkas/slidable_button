@@ -85,9 +85,16 @@ class VerticalSlidableButton extends StatefulWidget {
   /// Default value true
   final bool autoSlide;
 
-  /// Creates a [SlidableButton]
+  /// Whether the button can be stopped at center position.
+  ///
+  /// This will ignore and lock [completeSlideAt] to default value.
+  ///
+  /// Default value false
+  final bool centerPoint;
+
+  /// Creates a [VerticalSlidableButton]
   const VerticalSlidableButton({
-    Key? key,
+    super.key,
     required this.onChanged,
     this.controller,
     this.child,
@@ -99,14 +106,15 @@ class VerticalSlidableButton extends StatefulWidget {
     this.border,
     this.borderRadius = const BorderRadius.all(Radius.circular(60.0)),
     this.initialPosition = SlidableButtonPosition.start,
-    this.completeSlideAt = 0.5,
+    double completeSlideAt = 0.5,
     this.height = 120.0,
     this.width = 36.0,
     this.buttonHeight,
     this.dismissible = true,
     this.isRestart = false,
     this.tristate = false,
-  }) : super(key: key);
+    this.centerPoint = false,
+  }) : completeSlideAt = centerPoint ? 0.5 : completeSlideAt;
 
   @override
   State<VerticalSlidableButton> createState() => _VerticalSlidableButtonState();
@@ -161,10 +169,17 @@ class _VerticalSlidableButtonState extends State<VerticalSlidableButton>
   }
 
   void _initialPositionController() {
-    if (widget.initialPosition == SlidableButtonPosition.end) {
-      _controller.value = 1.0;
-    } else {
-      _controller.value = 0.0;
+    switch (widget.initialPosition) {
+      case SlidableButtonPosition.start:
+        _controller.value = 0.0;
+        break;
+      case SlidableButtonPosition.center:
+        _controller.value = 0.5;
+        break;
+      case SlidableButtonPosition.end:
+        _controller.value = 1.0;
+        break;
+      default:
     }
   }
 
@@ -253,6 +268,19 @@ class _VerticalSlidableButtonState extends State<VerticalSlidableButton>
   void _onDragEnd(DragEndDetails details) {
     if (!widget.autoSlide) return _afterDragEnd();
 
+    if (widget.centerPoint) {
+      if (_controller.value > 0.25 && _controller.value < 0.75) {
+        _controller
+            .animateTo(
+              0.5,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn,
+            )
+            .whenComplete(_afterDragEnd);
+        return;
+      }
+    }
+
     final extent = _container!.size.height - _positioned!.size.height;
     double fractionalVelocity = (details.primaryVelocity! / extent).abs();
     if (fractionalVelocity < 0.5) {
@@ -279,9 +307,17 @@ class _VerticalSlidableButtonState extends State<VerticalSlidableButton>
   }
 
   void _afterDragEnd() {
-    final SlidableButtonPosition position = _controller.value <= .5
-        ? SlidableButtonPosition.start
-        : SlidableButtonPosition.end;
+    final SlidableButtonPosition position;
+
+    if (_controller.value > 0.5) {
+      position = SlidableButtonPosition.end;
+    } else {
+      if (widget.centerPoint && _controller.value == 0.5) {
+        position = SlidableButtonPosition.center;
+      } else {
+        position = SlidableButtonPosition.start;
+      }
+    }
 
     if (widget.isRestart && widget.initialPosition != position) {
       _initialPositionController();

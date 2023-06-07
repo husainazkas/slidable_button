@@ -6,7 +6,13 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
-  publish:
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
-    # with:
-    #   working-directory: path/to/package/within/repository
+  publishing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout to Slidable Button'
+        uses: action/slidable_button@master
+      - name: '>>Publishing package...<<'
+        uses: k-paxian/dart-package-publisher@v1.6
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}

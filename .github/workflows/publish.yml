@@ -9,8 +9,8 @@ jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout to Slidable Button'
-        uses: action/slidable_button@master
+      - name: 'Checkout'
+        uses: actions/checkout@main
       - name: '>>Publishing package...<<'
         uses: k-paxian/dart-package-publisher@v1.6
         with:

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:slidable_button/slidable_button.dart';
 
 void main() {
-  runApp(MaterialApp(home: SlidableButtonDemo()));
+  runApp(const MaterialApp(home: SlidableButtonDemo()));
 }
 
 class SlidableButtonDemo extends StatefulWidget {
   const SlidableButtonDemo({Key? key}) : super(key: key);
 
   @override
-  _SlidableButtonDemoState createState() => _SlidableButtonDemoState();
+  State<SlidableButtonDemo> createState() => _SlidableButtonDemoState();
 }
 
 class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
@@ -19,7 +19,7 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Slidable Button Demo'),
+        title: const Text('Slidable Button Demo'),
       ),
       body: Center(
         child: Column(
@@ -31,8 +31,8 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Slide this button to left or right.'),
-                      SizedBox(height: 16.0),
+                      const Text('Slide this button to left or right.'),
+                      const SizedBox(height: 16.0),
                       HorizontalSlidableButton(
                         initialPosition: SlidableButtonPosition.start,
                         width: MediaQuery.of(context).size.width / 3,
@@ -43,9 +43,9 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
                             .withOpacity(0.5),
                         buttonColor: Theme.of(context).primaryColor,
                         dismissible: false,
-                        label: Center(child: Text('Slide Me')),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        label: const Center(child: Text('Slide Me')),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -67,13 +67,13 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
                     ],
                   ),
                 ),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Slide this button to top or bottom.'),
-                      SizedBox(height: 16.0),
+                      const Text('Slide this button to top or bottom.'),
+                      const SizedBox(height: 16.0),
                       VerticalSlidableButton(
                         initialPosition: SlidableButtonPosition.start,
                         height: MediaQuery.of(context).size.height / 3,
@@ -84,9 +84,9 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
                             .withOpacity(0.5),
                         buttonColor: Theme.of(context).primaryColor,
                         dismissible: false,
-                        label: Center(child: Text('Slide Me')),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        label: const Center(child: Text('Slide Me')),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -110,8 +110,8 @@ class _SlidableButtonDemoState extends State<SlidableButtonDemo> {
                 ),
               ],
             ),
-            SizedBox(height: 16.0),
-            Text('Result:\n$result', textAlign: TextAlign.center)
+            const SizedBox(height: 16.0),
+            Text('Result:\n$result', textAlign: TextAlign.center),
           ],
         ),
       ),

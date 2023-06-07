@@ -271,7 +271,7 @@ class _HorizontalSlidableButtonState extends State<HorizontalSlidableButton>
   }
 
   void _afterDragEnd() {
-    SlidableButtonPosition position = _controller.value <= .5
+    final SlidableButtonPosition position = _controller.value <= .5
         ? SlidableButtonPosition.start
         : SlidableButtonPosition.end;
 

@@ -13,7 +13,7 @@ class SlidableSimulation extends GravitySimulation {
 
   @override
   bool isDone(double time) {
-    final _x = x(time).abs();
-    return _x <= 0.0 || _x >= 1.0;
+    final resolvedX = x(time).abs();
+    return resolvedX <= 0.0 || resolvedX >= 1.0;
   }
 }

@@ -13,7 +13,7 @@ import 'package:slidable_button_example/main.dart';
 void main() {
   testWidgets('Slidable Button Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(SlidableButtonDemo());
+    await tester.pumpWidget(const SlidableButtonDemo());
 
     // Verify that platform version is retrieved.
     expect(

@@ -105,7 +105,7 @@ class SlidableButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SlidableButtonState createState() => _SlidableButtonState();
+  State<SlidableButton> createState() => _SlidableButtonState();
 }
 
 class _SlidableButtonState extends State<SlidableButton>
@@ -266,7 +266,7 @@ class _SlidableButtonState extends State<SlidableButton>
     );
 
     _controller.animateWith(simulation).whenComplete(() {
-      SlidableButtonPosition position = _controller.value == 0
+      final SlidableButtonPosition position = _controller.value == 0
           ? SlidableButtonPosition.left
           : SlidableButtonPosition.right;
 

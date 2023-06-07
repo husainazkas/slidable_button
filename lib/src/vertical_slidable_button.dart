@@ -270,7 +270,7 @@ class _VerticalSlidableButtonState extends State<VerticalSlidableButton>
   }
 
   void _afterDragEnd() {
-    SlidableButtonPosition position = _controller.value <= .5
+    final SlidableButtonPosition position = _controller.value <= .5
         ? SlidableButtonPosition.start
         : SlidableButtonPosition.end;
 

@@ -1,8 +1,11 @@
+## 3.0.0+1
+* Update CHANGELOG.
+
 ## 3.0.0
-* Legacy SlidableButton has been removed, use specified direction instead
-* Can update initial button position using setState
-* Button can be stopped at center position
-* Initial button position can set to center even center point is false
+* Legacy SlidableButton has been removed, use specified direction instead.
+* Can update initial button position using setState.
+* Button can be stopped at center position.
+* Initial button position can set to center even center point is false.
 
 ## 2.0.0+1
 * Update docs on VerticalSlidableButton.

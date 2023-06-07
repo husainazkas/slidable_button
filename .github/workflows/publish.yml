@@ -9,10 +9,11 @@ jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
+      - name: '>>Checkout...<<'
         uses: actions/checkout@main
       - name: '>>Publishing package...<<'
         uses: k-paxian/dart-package-publisher@v1.6
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          environment: pub.dev

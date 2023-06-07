@@ -16,7 +16,7 @@ Note : This plugin is cloned and remade from [swipe_button](https://pub.dev/pack
 
 ```yaml
 dependencies:
-  slidable_button: ^2.0.0
+  slidable_button: ^3.0.0
 ```
 
 ### Simple to use
@@ -91,6 +91,6 @@ Vertical usage example :
     ),
 ```
 
-### Breaking Change
+### Migration Guide
 
-Starts from v2.x.x, `SlidableButton` class is deprecated. Please use `HorizontalSlidableButton` or  `VerticalSlidableButton` for specific direction usage.
+If you already use this package before v3.x.x you may need to migrate your code to `HorizontalSlidableButton` or  `VerticalSlidableButton` for specific direction usage because `SlidableButton` class has been removed start from v3.0.0.

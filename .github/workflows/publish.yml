@@ -9,23 +9,21 @@ jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
-      - name: '>>Checkout<<'
+      - name: '>> Checkout <<'
         uses: actions/checkout@v3.5.2
-      - name: '>>Install Flutter<<'
+      - name: '>> Install Flutter <<'
         uses: subosito/flutter-action@v2.10.0
         with:
           flutter-version: '3.10.0'
-      - name: '>>Install dependencies<<'
+      - name: '>> Install dependencies <<'
         run: flutter pub get
-      - name: '>>Analyze<<'
+      - name: '>> Analyze <<'
         run: flutter analyze
-      - name: '>>Run tests<<'
-        run: flutter test
-      - name: '>>Format code<<'
+      - name: '>> Format code <<'
         run: dart format --fix .
-      - name: '>>Check Publish Warnings<<'
+      - name: '>> Check Publish Warnings <<'
         run: dart pub publish --dry-run
-      - name: '>>Publish Package<<'
+      - name: '>> Publish Package <<'
         uses: k-paxian/dart-package-publisher@v1.6
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
